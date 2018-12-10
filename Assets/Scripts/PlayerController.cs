@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     private float yaw = 0.0f;
     private float pitch = 0.0f;
 
+    private float mySpeed = 1;
+    private float RunSpeed = 2;
+
 
     private void Awake()
     {
@@ -32,9 +35,15 @@ public class PlayerController : MonoBehaviour
 
         transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
 
-        var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
-        var x = Input.GetAxis("Horizontal") * Time.deltaTime * 3.0f;
+        var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f * mySpeed;
+        var x = Input.GetAxis("Horizontal") * Time.deltaTime * 3.0f * mySpeed;
         transform.Translate(x, 0, z);
+
+        if (Input.GetKey("Sprint"))
+        {
+            mySpeed = RunSpeed;
+        }
+
         healthBar.value = currentHealth;
     }
 
