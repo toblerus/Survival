@@ -38,8 +38,8 @@ public class WorldGeneration : MonoBehaviour
             }
         }
 
-        var PlayerObject = Instantiate(player, new Vector3((WorldSize*terrainOffset)/2,0, (WorldSize * terrainOffset) / 2), Quaternion.identity);
-        PlayerObject.name = "Player";
+      //  var PlayerObject = Instantiate(player, new Vector3((WorldSize*terrainOffset)/2,0, (WorldSize * terrainOffset) / 2), Quaternion.identity);
+       // PlayerObject.name = "Player";
 
         SpawnOnWorldObjects(cactusPrefab, cactusAmount);
         SpawnOnWorldObjects(rockPrefab1, rock1Amount);

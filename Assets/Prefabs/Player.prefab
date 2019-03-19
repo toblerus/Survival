@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 136912284444743818}
   - component: {fileID: 114566595868696264}
   - component: {fileID: 54544886751003750}
+  - component: {fileID: 114888178480303398}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -662,6 +663,19 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   speedH: 2
   speedV: 2
+--- !u!114 &114888178480303398
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1333798718993346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2d1b8b3defc0504face47989cac8cdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemsConfig: {fileID: 11400000, guid: 06c00f89323be68429550a665c6253b4, type: 2}
+  waterImage: {fileID: 0}
 --- !u!124 &124280550925761818
 Behaviour:
   m_ObjectHideFlags: 1

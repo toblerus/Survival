@@ -1,9 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
-public class ItemSetting : MonoBehaviour {
+[Serializable]
+public class ItemSetting {
+    public ItemType ItemType; 
     public string Name = "";
     public int StackSize = 0;
     public Sprite Icon;
+
 }

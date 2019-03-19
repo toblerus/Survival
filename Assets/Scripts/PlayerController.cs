@@ -39,10 +39,10 @@ public class PlayerController : MonoBehaviour
         var x = Input.GetAxis("Horizontal") * Time.deltaTime * 3.0f * mySpeed;
         transform.Translate(x, 0, z);
 
-        if (Input.GetKey("Sprint"))
-        {
-            mySpeed = RunSpeed;
-        }
+        //if (Input.GetKey("Sprint"))
+        //{
+        //    mySpeed = RunSpeed;
+        //}
 
         healthBar.value = currentHealth;
     }
