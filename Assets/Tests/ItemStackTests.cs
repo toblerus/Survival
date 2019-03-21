@@ -75,7 +75,6 @@ public class ItemStack
     private int _amount = 0;
     public int Amount { get { return _amount; } }
     public readonly int Capacity;
-    public readonly int LeftoverSpace;
 
     public ItemStack(int capacity)
     {
