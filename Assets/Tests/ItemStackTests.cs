@@ -55,6 +55,15 @@ public class ItemStackTests {
         Assert.LessOrEqual(addAmount, DefaultCapacity);
     }
 
+    [Test]
+    public void Test_GetLeftoverSpace()
+    {
+        var itemStack = new ItemStack(DefaultCapacity);
+        itemStack.AddItems(10);
+        var Leftover = itemStack.GetLeftoverSpace();
+        Assert.AreEqual(54, Leftover);
+    }
+
     private void InitializeItemStack(int bar)
     {
         new ItemStack(bar);
@@ -66,6 +75,7 @@ public class ItemStack
     private int _amount = 0;
     public int Amount { get { return _amount; } }
     public readonly int Capacity;
+    public readonly int LeftoverSpace;
 
     public ItemStack(int capacity)
     {
@@ -85,5 +95,10 @@ public class ItemStack
     public void DropItems(int amount)
     {
         _amount -= amount;
+    }
+
+    public int GetLeftoverSpace()
+    {
+        return Capacity - _amount;
     }
 }
