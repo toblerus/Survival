@@ -35,7 +35,7 @@ public class ItemStackTests {
     public void Test_CapacityNull()
     {
         new ItemStack(0);
-        Assert.Throws<Exception>(() => new ItemStack(t0));
+        Assert.Throws<Exception>(() => new ItemStack(0));
     }
 
     private void InitializeItemStack(int bar)
