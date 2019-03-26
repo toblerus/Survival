@@ -1,4 +1,6 @@
-﻿namespace Scripts.InventorySystem
+﻿using System;
+
+namespace Scripts.InventorySystem
 {
     public class Inventory
     {
@@ -8,6 +10,11 @@
 
         public Inventory(int size)
         {
+            if (size <= 0)
+            {
+                throw new Exception("Inventory Size cannot be 0 (or negative)");
+            }
+
             _size = size;
             contents = new ItemStack[size];
 

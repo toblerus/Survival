@@ -25,12 +25,23 @@ namespace Scripts.InventorySystem
 
         public void AddItems(int amount)
         {
+            if (amount > GetLeftoverSpace())
+            {
+                throw new Exception("Tried to add more than fits into Stack");
+            }
             _amount += amount;
         }
 
         public void DropItems(int amount)
         {
-            _amount -= amount;
+            if (amount <= _amount)
+            {
+                _amount -= amount;
+            }
+            else
+            {
+                _amount = 0;
+            }
         }
 
         public int GetLeftoverSpace()

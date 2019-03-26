@@ -17,7 +17,7 @@ namespace Tests
         }
 
         [Test]
-        public void Test_SizeNull()
+        public void Test_SizeZero()
         {
             Assert.Throws<Exception>(() => new Inventory(0));
         }
