@@ -48,6 +48,7 @@ namespace Tests
 
             var itemStacks = _inventory.ItemStacks;
             Assert.AreEqual(1, itemStacks.Count);
+            Assert.AreEqual(2 * DefaultItemAmount, itemStacks[0].Amount);
         }
 
         [Test]
@@ -62,6 +63,22 @@ namespace Tests
             Assert.AreEqual(ItemStackTests.DefaultCapacity, itemStacks[0].Amount); 
             var expectedAmountSecondStack = 2 * itemsAdded - ItemStackTests.DefaultCapacity;
             Assert.AreEqual(expectedAmountSecondStack, itemStacks[1].Amount);
+        }
+
+        [Test]
+        public void Test_SplitStack_AddToInventory()
+        {
+            _inventory.AddItems(DefaultItemType, DefaultItemAmount);
+
+            var itemStack = _inventory.ItemStacks[0];
+            var newItemStack = itemStack.Split();
+            _inventory.AddItemStack(newItemStack);
+
+            var itemStacks = _inventory.ItemStacks;
+            Assert.AreEqual(2, itemStacks.Count);
+            var splitItemAmount = DefaultItemAmount / 2;
+            Assert.AreEqual(splitItemAmount, itemStacks[0].Amount);
+            Assert.AreEqual(DefaultItemAmount - splitItemAmount, itemStacks[1].Amount);
         }
     }
 }
