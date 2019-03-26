@@ -83,15 +83,6 @@ namespace Tests
             itemStack.AddItems(10);
             var Leftover = itemStack.GetLeftoverSpace();
             Assert.AreEqual(54, Leftover);
-        }
-
-        [Test]
-        public void Test_DropTooManyItems()
-        {
-            var itemStack = new ItemStack(DefaultCapacity);
-            itemStack.AddItems(10);
-            itemStack.RemoveItems(15);
-            Assert.GreaterOrEqual(itemStack.Amount, 0);
-        }
+        } 
     }
 }
