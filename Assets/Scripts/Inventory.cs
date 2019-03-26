@@ -20,7 +20,7 @@ namespace Scripts.InventorySystem
 
             for (int i = 0; i < contents.Length; i++)
             {
-                contents[i] = new ItemStack(64);
+                contents[i] = new ItemStack(ItemType.Waterbottle, 64);
             }
         }
 

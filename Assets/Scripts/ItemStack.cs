@@ -8,7 +8,7 @@ namespace Scripts.InventorySystem
         public int Amount { get { return _amount; } }
         public readonly int Capacity;
 
-        public ItemStack(int capacity)
+        public ItemStack(ItemType itemType, int capacity)
         {
             if (capacity <= 0)
             {
