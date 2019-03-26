@@ -59,7 +59,7 @@ namespace Tests
 
             var itemStacks = _inventory.ItemStacks;
             Assert.AreEqual(2, itemStacks.Count);
-            Assert.AreEqual(ItemStackTests.DefaultCapacity, itemStacks[0].Amount);
+            Assert.AreEqual(ItemStackTests.DefaultCapacity, itemStacks[0].Amount); 
             var expectedAmountSecondStack = 2 * itemsAdded - ItemStackTests.DefaultCapacity;
             Assert.AreEqual(expectedAmountSecondStack, itemStacks[1].Amount);
         }
