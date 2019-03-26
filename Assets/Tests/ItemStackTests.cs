@@ -6,7 +6,7 @@ namespace Tests
 {
     public class ItemStackTests
     {
-        private const int DefaultCapacity = 64;
+        public const int DefaultCapacity = 64;
         private const ItemType DefaultItemType = ItemType.Waterbottle;
 
         [Test]
