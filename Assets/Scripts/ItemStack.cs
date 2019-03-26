@@ -7,6 +7,7 @@ namespace Scripts.InventorySystem
         private int _amount = 0;
         public int Amount { get { return _amount; } }
         public readonly int Capacity;
+        public ItemType ItemType;
 
         public ItemStack(ItemType itemType, int capacity)
         {
@@ -14,7 +15,7 @@ namespace Scripts.InventorySystem
             {
                 throw new Exception("Capacity cannot be 0 (or negative)");
             }
-
+            ItemType = itemType;
             Capacity = capacity;
         }
 
