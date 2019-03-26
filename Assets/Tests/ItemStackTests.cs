@@ -56,7 +56,7 @@ namespace Tests
             Assert.AreEqual(itemStack.Amount, 0);
 
             itemStack = new ItemStack(DefaultCapacity);
-            addAmount = 30;
+            addAmount = 40;
             itemStack.AddItems(addAmount);
             Assert.Throws<Exception>(() => itemStack.AddItems(addAmount));
             Assert.AreEqual(addAmount, itemStack.Amount);

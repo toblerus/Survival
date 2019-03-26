@@ -40,7 +40,7 @@ namespace Scripts.InventorySystem
             }
             else
             {
-                _amount = 0;
+                throw new Exception("Tried to remove more than left in Stack");
             }
         }
 
