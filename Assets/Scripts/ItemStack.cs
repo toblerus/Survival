@@ -9,7 +9,7 @@ namespace Scripts.InventorySystem
         public readonly int Capacity;
         public ItemType ItemType;
 
-        public ItemStack(ItemType itemType, int capacity)
+        public ItemStack(ItemType itemType, int capacity = 64)
         {
             if (capacity <= 0)
             {
