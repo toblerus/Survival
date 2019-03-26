@@ -21,7 +21,7 @@ namespace Tests
         public void Test_Initialization()
         {
             Assert.AreEqual(DefaultSlotCapacity, _inventory.Capacity);
-            Assert.AreEqual(0, _inventory.GetItemStacks().Count);
+            Assert.AreEqual(0, _inventory.ItemStacks.Count);
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace Tests
         {
             _inventory.AddItems(DefaultItemType, DefaultItemAmount);
 
-            var itemStacks = _inventory.GetItemStacks();
+            var itemStacks = _inventory.ItemStacks;
             Assert.AreEqual(1, itemStacks.Count);
             Assert.AreEqual(DefaultItemAmount, itemStacks[0].Amount);
         }
@@ -46,7 +46,7 @@ namespace Tests
             _inventory.AddItems(DefaultItemType, DefaultItemAmount);
             _inventory.AddItems(DefaultItemType, DefaultItemAmount);
 
-            var itemStacks = _inventory.GetItemStacks();
+            var itemStacks = _inventory.ItemStacks;
             Assert.AreEqual(1, itemStacks.Count);
         }
 
@@ -57,7 +57,7 @@ namespace Tests
             _inventory.AddItems(DefaultItemType, itemsAdded);
             _inventory.AddItems(DefaultItemType, itemsAdded);
 
-            var itemStacks = _inventory.GetItemStacks();
+            var itemStacks = _inventory.ItemStacks;
             Assert.AreEqual(2, itemStacks.Count);
             Assert.AreEqual(ItemStackTests.DefaultCapacity, itemStacks[0].Amount);
             var expectedAmountSecondStack = 2 * itemsAdded - ItemStackTests.DefaultCapacity;

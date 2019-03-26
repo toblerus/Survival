@@ -90,7 +90,7 @@ namespace Tests
         {
             var itemStack = new ItemStack(DefaultItemType, DefaultCapacity);
             itemStack.AddItems(10);
-            var Leftover = itemStack.GetLeftoverSpace();
+            var Leftover = itemStack.GetRemainingCapacity();
             Assert.AreEqual(54, Leftover);
         }
     }

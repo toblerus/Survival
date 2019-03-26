@@ -9,6 +9,11 @@ namespace Scripts.InventorySystem
         private readonly int _capacity;
         private readonly List<ItemStack> _itemStacks = new List<ItemStack>();
 
+        public IReadOnlyList<ItemStack> ItemStacks
+        {
+            get { return _itemStacks;  }
+        }
+
         public int Capacity
         {
             get { return _capacity; }
@@ -27,34 +32,26 @@ namespace Scripts.InventorySystem
         public bool IsEmpty()
         {
             return
-                Capacity == 0; //Dürfte eigentlich niemals 0 sein, Inventar wird mit fester ItemSlot Zahl initialisiert
-        }
-
-        public List<ItemStack> GetItemStacks()
-        {
-            throw new NotImplementedException();
+                Capacity == 0;
         }
 
         public void AddItems(ItemType itemType, int itemAmount)
         {
             var itemStack = GetAvailableItemStackForItemType(itemType);
-
-            // TODO:
-            // 1. find first matching stack (ItemType && Amount < Capacity)
-            // 2. add as many items as possible --> remaining items
-            // go to 1.
-            // if no stack found:
-            // 3. check inventory capacity
-            // 4. if slot available: create stack
-            // 5. add items to new stack
-            // if no slot available:
-            // 6. exception
+            var remainingCapacity = itemStack.GetRemainingCapacity();
+            var itemsToAdd = Math.Min(itemAmount, remainingCapacity);
+            itemStack.AddItems(itemsToAdd);
+            var remainingItems = itemAmount - itemsToAdd;
+            if(remainingItems > 0)
+            {
+                AddItems(itemType, remainingItems);
+            }
         }
 
         private ItemStack GetAvailableItemStackForItemType(ItemType itemType)
         {
             var itemStack = _itemStacks
-                .FirstOrDefault(stack => stack.ItemType == itemType && stack.GetLeftoverSpace() > 0);
+                .FirstOrDefault(stack => stack.ItemType == itemType && stack.GetRemainingCapacity() > 0);
 
             return itemStack ?? CreateItemStack(itemType);
         }
