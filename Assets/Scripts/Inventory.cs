@@ -1,37 +1,43 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Scripts.InventorySystem
 {
     public class Inventory
     {
-        public readonly int _size;
-        public ItemStack[] contents;
-        public int Size { get { return _size; } }
+        private readonly int _capacity;
+        private ItemStack[] _contents;
+        public int Capacity { get { return _capacity; } }
 
-        public Inventory(int size)
+        public Inventory(int capacity)
         {
-            if (size <= 0)
+            if (capacity <= 0)
             {
-                throw new Exception("Inventory Size cannot be 0 (or negative)");
+                throw new Exception("Inventory capacity cannot be 0 (or negative)");
             }
 
-            _size = size;
-            contents = new ItemStack[size];
+            _capacity = capacity;
+            _contents = new ItemStack[capacity];
 
-            for (int i = 0; i < contents.Length; i++)
+            for (int i = 0; i < _contents.Length; i++)
             {
-                contents[i] = new ItemStack(ItemType.Waterbottle, 64);
+                _contents[i] = new ItemStack(ItemType.Waterbottle, 64);
             }
         }
 
         public bool IsEmpty()
         {
-            return Size == 0; //Dürfte eigentlich niemals 0 sein, Inventar wird mit fester ItemSlot Zahl initialisiert
+            return Capacity == 0; //Dürfte eigentlich niemals 0 sein, Inventar wird mit fester ItemSlot Zahl initialisiert
         }
 
         public void AddItemStack(int slot, int amount)
         {
-            contents[slot].AddItems(amount);
+            _contents[slot].AddItems(amount);
+        }
+
+        public List<ItemStack> GetItemStacks()
+        {
+            throw new NotImplementedException();
         }
     }
 }
