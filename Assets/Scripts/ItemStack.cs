@@ -28,7 +28,7 @@ namespace Scripts.InventorySystem
             _amount += amount;
         }
 
-        public void DropItems(int amount)
+        public void RemoveItems(int amount)
         {
             _amount -= amount;
         }

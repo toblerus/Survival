@@ -43,17 +43,31 @@ namespace Tests
         {
             var itemStack = new ItemStack(DefaultCapacity);
             itemStack.AddItems(10);
-            itemStack.DropItems(5);
+            itemStack.RemoveItems(5);
             Assert.AreEqual(5, itemStack.Amount);
         }
 
         [Test]
-        public void Test_ExceedCapacity()
+        public void Test_AddItems_ExceedCapacity()
         {
             var addAmount = 100;
             var itemStack = new ItemStack(DefaultCapacity);
             Assert.Throws<Exception>(() => itemStack.AddItems(addAmount));
             Assert.LessOrEqual(itemStack.Amount, DefaultCapacity);
+        }
+
+        [Test]
+        public void Test_RemoveItems_ExceedAmount()
+        {
+            var itemStack = new ItemStack(DefaultCapacity);
+            Assert.Throws<Exception>(() => itemStack.RemoveItems(15));
+            Assert.AreEqual(0, itemStack.Amount);
+
+            itemStack = new ItemStack(DefaultCapacity);
+            var itemsAdded = 10;
+            itemStack.AddItems(itemsAdded);
+            Assert.Throws<Exception>(() => itemStack.RemoveItems(15));
+            Assert.AreEqual(itemsAdded, itemStack.Amount);
         }
 
         [Test]
@@ -70,13 +84,8 @@ namespace Tests
         {
             var itemStack = new ItemStack(DefaultCapacity);
             itemStack.AddItems(10);
-            itemStack.DropItems(15);
+            itemStack.RemoveItems(15);
             Assert.GreaterOrEqual(itemStack.Amount, 0);
-        }
-
-        private void InitializeItemStack(int bar)
-        {
-            new ItemStack(bar);
         }
     }
 }
