@@ -45,11 +45,6 @@ public class Inventory
         _size = size;
         contents = new ItemStack[size];
 
-        foreach(ItemStack slot in contents)
-        {
-            slot = new ItemStack(64);
-        }
-
         for(int i = 0; i < contents.Length; i++)
         {
             contents[i] = new ItemStack(64);

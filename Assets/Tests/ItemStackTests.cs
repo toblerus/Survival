@@ -31,7 +31,6 @@ public class ItemStackTests {
     [Test]
     public void Test_CapacityNull()
     {
-        new ItemStack(0);
         Assert.Throws<Exception>(() => new ItemStack(0));
     }
 
@@ -47,9 +46,10 @@ public class ItemStackTests {
     [Test]
     public void Test_ExceedCapacity()
     {
-        var addAmount = 65;
+        var addAmount = 100;
         var itemStack = new ItemStack(DefaultCapacity);
-        Assert.LessOrEqual(addAmount, DefaultCapacity);
+        Assert.Throws<Exception>(() => itemStack.AddItems(addAmount));
+        Assert.LessOrEqual(itemStack.Amount, DefaultCapacity);
     }
 
     [Test]
@@ -59,6 +59,15 @@ public class ItemStackTests {
         itemStack.AddItems(10);
         var Leftover = itemStack.GetLeftoverSpace();
         Assert.AreEqual(54, Leftover);
+    }
+
+    [Test]
+    public void Test_DropTooManyItems()
+    {
+        var itemStack = new ItemStack(DefaultCapacity);
+        itemStack.AddItems(10);
+        itemStack.DropItems(15);
+        Assert.GreaterOrEqual(itemStack.Amount, 0);
     }
 
     private void InitializeItemStack(int bar)
@@ -75,6 +84,11 @@ public class ItemStack
 
     public ItemStack(int capacity)
     {
+        if (capacity <= 0)
+        {
+            throw new Exception("Capacity cannot be 0 (or negative)");
+        }
+
         Capacity = capacity;
     }
 
