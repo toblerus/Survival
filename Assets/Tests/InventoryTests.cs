@@ -48,6 +48,7 @@ namespace Tests
 
             var itemStacks = _inventory.ItemStacks;
             Assert.AreEqual(1, itemStacks.Count);
+            Assert.AreEqual(2 * DefaultItemAmount, itemStacks[0].Amount);
         }
 
         [Test]
