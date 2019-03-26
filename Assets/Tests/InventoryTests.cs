@@ -1,13 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.TestTools;
-using NUnit.Framework;
-using System.Collections;
+﻿using NUnit.Framework;
+using Scripts.InventorySystem;
 using System;
-
 
 public class InventoryTests
 {
-
     private const int DefaultSlotAmount = 12;
 
     [Test]
