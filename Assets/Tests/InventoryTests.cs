@@ -7,15 +7,18 @@ namespace Tests
 {
     public class InventoryTests
     {
-        private Inventory _inventory;
         private const int DefaultSlotCapacity = 12;
         private const ItemType DefaultItemType = ItemType.Waterbottle;
         private const int DefaultItemAmount = 30;
 
+        private Inventory _inventory;
+        private MockItemStackCapacityProvider _mockItemStackCapacityProvider;
+
         [SetUp]
         public void SetUp()
         {
-            _inventory = new Inventory(DefaultSlotCapacity);
+            _mockItemStackCapacityProvider = new MockItemStackCapacityProvider();
+            _inventory = new Inventory(DefaultSlotCapacity, _mockItemStackCapacityProvider);
         }
 
         [Test]
@@ -28,7 +31,7 @@ namespace Tests
         [Test]
         public void Test_CapacityZero_ShouldThrow()
         {
-            Assert.Throws<Exception>(() => new Inventory(0));
+            Assert.Throws<Exception>(() => new Inventory(0, _mockItemStackCapacityProvider));
         }
 
         [Test]

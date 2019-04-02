@@ -4,11 +4,9 @@ namespace Scripts.InventorySystem
 {
     public class ItemStack
     {
-        private int _amount = 0;
-        public int Amount => _amount;
+        public int Amount { get; private set; } = 0;
         public readonly int Capacity;
-        private readonly ItemType _itemType;
-        public ItemType ItemType => _itemType;
+        public ItemType ItemType { get; }
 
         public ItemStack(ItemType itemType, int capacity = 64)
         {
@@ -16,13 +14,18 @@ namespace Scripts.InventorySystem
             {
                 throw new Exception("Capacity cannot be 0 (or negative)");
             }
-            _itemType = itemType;
+            ItemType = itemType;
             Capacity = capacity;
+        }
+
+        public ItemStack(ItemType itemType, IItemStackCapacityProvider itemStackCapacityProvider)
+            : this (itemType, itemStackCapacityProvider.GetCapacityForItemType(itemType))
+        {
         }
 
         public bool IsEmpty()
         {
-            return _amount == 0;
+            return Amount == 0;
         }
 
         public void AddItems(int amount)
@@ -31,14 +34,14 @@ namespace Scripts.InventorySystem
             {
                 throw new Exception("Tried to add more than fits into Stack");
             }
-            _amount += amount;
+            Amount += amount;
         }
 
         public void RemoveItems(int amount)
         {
-            if (amount <= _amount)
+            if (amount <= Amount)
             {
-                _amount -= amount;
+                Amount -= amount;
             }
             else
             {
@@ -48,16 +51,21 @@ namespace Scripts.InventorySystem
 
         public int GetRemainingCapacity()
         {
-            return Capacity - _amount;
+            return Capacity - Amount;
         }
 
         public ItemStack Split()
         {
             var initialAmount = Amount;
-            _amount = _amount / 2;
-            var splitStack = new ItemStack(_itemType, Capacity);
-            splitStack.AddItems(initialAmount - _amount);
+            Amount = Amount / 2;
+            var splitStack = new ItemStack(ItemType, Capacity);
+            splitStack.AddItems(initialAmount - Amount);
             return splitStack;
+        }
+
+        public override string ToString()
+        {
+            return $"[{nameof(ItemStack)}] {ItemType}: {Amount} / {Capacity}";
         }
     }
 }

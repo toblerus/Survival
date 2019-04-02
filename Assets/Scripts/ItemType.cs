@@ -6,5 +6,6 @@
         Shovel,
         Sand,
         Stone,
-        Cactus
+        Cactus,
+        Pickaxe
     };

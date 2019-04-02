@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Scripts.InventorySystem
 {
     public class Inventory
     {
-        private readonly int _capacity;
         private readonly List<ItemStack> _itemStacks = new List<ItemStack>();
+        private readonly IItemStackCapacityProvider _itemStackCapacityProvider;
 
         public IReadOnlyList<ItemStack> ItemStacks => _itemStacks;
 
-        public int Capacity => _capacity;
+        public int Capacity { get; }
 
-        public Inventory(int capacity)
+        public Inventory(int capacity, IItemStackCapacityProvider itemStackCapacityProvider)
         {
             if (capacity <= 0)
             {
                 throw new Exception("Inventory capacity cannot be 0 (or negative)");
             }
 
-            _capacity = capacity;
+            Capacity = capacity;
+            _itemStackCapacityProvider = itemStackCapacityProvider;
         }
 
         public bool IsEmpty()
@@ -53,7 +55,7 @@ namespace Scripts.InventorySystem
         {
             if (_itemStacks.Count < Capacity)
             {
-                var itemStack = new ItemStack(itemType);
+                var itemStack = new ItemStack(itemType, _itemStackCapacityProvider);
                 _itemStacks.Add(itemStack);
                 return itemStack;
             }
@@ -65,6 +67,20 @@ namespace Scripts.InventorySystem
         {
             var createdStack = CreateItemStack(itemStack.ItemType);
             createdStack.AddItems(itemStack.Amount);
+        }
+
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine($"[{nameof(Inventory)}]");
+            builder.AppendLine($"{ItemStacks.Count} / {Capacity} in use:");
+            
+            foreach (var stack in ItemStacks)
+            {
+                builder.AppendLine(stack.ToString());
+            }
+
+            return builder.ToString();
         }
     }
 }
