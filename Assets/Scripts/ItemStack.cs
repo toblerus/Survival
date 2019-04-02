@@ -5,9 +5,10 @@ namespace Scripts.InventorySystem
     public class ItemStack
     {
         private int _amount = 0;
-        public int Amount { get { return _amount; } }
+        public int Amount => _amount;
         public readonly int Capacity;
-        private ItemType _itemType;
+        private readonly ItemType _itemType;
+        public ItemType ItemType => _itemType;
 
         public ItemStack(ItemType itemType, int capacity = 64)
         {

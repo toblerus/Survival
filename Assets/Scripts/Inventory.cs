@@ -9,15 +9,9 @@ namespace Scripts.InventorySystem
         private readonly int _capacity;
         private readonly List<ItemStack> _itemStacks = new List<ItemStack>();
 
-        public IReadOnlyList<ItemStack> ItemStacks
-        {
-            get { return _itemStacks;  }
-        }
+        public IReadOnlyList<ItemStack> ItemStacks => _itemStacks;
 
-        public int Capacity
-        {
-            get { return _capacity; }
-        }
+        public int Capacity => _capacity;
 
         public Inventory(int capacity)
         {
@@ -31,8 +25,7 @@ namespace Scripts.InventorySystem
 
         public bool IsEmpty()
         {
-            return
-                Capacity == 0;
+            return Capacity == 0;
         }
 
         public void AddItems(ItemType itemType, int itemAmount)
@@ -42,7 +35,7 @@ namespace Scripts.InventorySystem
             var itemsToAdd = Math.Min(itemAmount, remainingCapacity);
             itemStack.AddItems(itemsToAdd);
             var remainingItems = itemAmount - itemsToAdd;
-            if(remainingItems > 0)
+            if (remainingItems > 0)
             {
                 AddItems(itemType, remainingItems);
             }
@@ -51,7 +44,7 @@ namespace Scripts.InventorySystem
         private ItemStack GetAvailableItemStackForItemType(ItemType itemType)
         {
             var itemStack = _itemStacks
-                .FirstOrDefault(stack => stack._itemType == itemType && stack.GetRemainingCapacity() > 0);
+                .FirstOrDefault(stack => stack.ItemType == itemType && stack.GetRemainingCapacity() > 0);
 
             return itemStack ?? CreateItemStack(itemType);
         }
@@ -70,9 +63,8 @@ namespace Scripts.InventorySystem
 
         public void AddItemStack(ItemStack itemStack)
         {
-            var createdStack = CreateItemStack(itemStack._itemType);
+            var createdStack = CreateItemStack(itemStack.ItemType);
             createdStack.AddItems(itemStack.Amount);
         }
-
     }
 }

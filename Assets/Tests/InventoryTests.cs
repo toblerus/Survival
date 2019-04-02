@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using NUnit.Framework;
 using Scripts.InventorySystem;
 
@@ -84,12 +85,12 @@ namespace Tests
         [Test]
         public void Test_AddItems_ExceedInventoryCapacity_ShouldThrow()
         {
-            Assert.Throws<Exception>(() =>
-            {
-                _inventory.AddItems(DefaultItemType, DefaultSlotCapacity * DefaultItemAmount + 1);
-            });
+            var expectedItemsAdded = DefaultSlotCapacity * ItemStackTests.DefaultCapacity;
+            Assert.Throws<Exception>(() => { _inventory.AddItems(DefaultItemType, expectedItemsAdded + 1); });
 
             Assert.AreEqual(DefaultSlotCapacity, _inventory.ItemStacks.Count);
+            var itemSum = _inventory.ItemStacks.Sum(itemStack => itemStack.Amount);
+            Assert.AreEqual(expectedItemsAdded, itemSum);
         }
     }
 }
