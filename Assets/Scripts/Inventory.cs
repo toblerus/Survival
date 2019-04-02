@@ -51,7 +51,7 @@ namespace Scripts.InventorySystem
         private ItemStack GetAvailableItemStackForItemType(ItemType itemType)
         {
             var itemStack = _itemStacks
-                .FirstOrDefault(stack => stack.ItemType == itemType && stack.GetRemainingCapacity() > 0);
+                .FirstOrDefault(stack => stack._itemType == itemType && stack.GetRemainingCapacity() > 0);
 
             return itemStack ?? CreateItemStack(itemType);
         }
@@ -70,7 +70,7 @@ namespace Scripts.InventorySystem
 
         public void AddItemStack(ItemStack itemStack)
         {
-            var createdStack = CreateItemStack(itemStack.ItemType);
+            var createdStack = CreateItemStack(itemStack._itemType);
             createdStack.AddItems(itemStack.Amount);
         }
 

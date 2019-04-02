@@ -7,7 +7,7 @@ namespace Scripts.InventorySystem
         private int _amount = 0;
         public int Amount { get { return _amount; } }
         public readonly int Capacity;
-        public ItemType ItemType;
+        private ItemType _itemType;
 
         public ItemStack(ItemType itemType, int capacity = 64)
         {
@@ -15,7 +15,7 @@ namespace Scripts.InventorySystem
             {
                 throw new Exception("Capacity cannot be 0 (or negative)");
             }
-            ItemType = itemType;
+            _itemType = itemType;
             Capacity = capacity;
         }
 
@@ -52,11 +52,11 @@ namespace Scripts.InventorySystem
 
         public ItemStack Split()
         {
-            int InitialAmount = Amount;
+            var initialAmount = Amount;
             _amount = _amount / 2;
-            var SplitStack = new ItemStack(ItemType, Capacity);
-            SplitStack.AddItems(InitialAmount - _amount);
-            return SplitStack;
+            var splitStack = new ItemStack(_itemType, Capacity);
+            splitStack.AddItems(initialAmount - _amount);
+            return splitStack;
         }
     }
 }
