@@ -49,5 +49,14 @@ namespace Scripts.InventorySystem
         {
             return Capacity - _amount;
         }
+
+        public ItemStack Split()
+        {
+            int InitialAmount = Amount;
+            _amount = _amount / 2;
+            var SplitStack = new ItemStack(ItemType, Capacity);
+            SplitStack.AddItems(InitialAmount - _amount);
+            return SplitStack;
+        }
     }
 }

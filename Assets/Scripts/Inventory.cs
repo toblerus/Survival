@@ -67,5 +67,12 @@ namespace Scripts.InventorySystem
 
             throw new Exception("No more space in inventory!");
         }
+
+        public void AddItemStack(ItemStack itemStack)
+        {
+            var createdStack = CreateItemStack(itemStack.ItemType);
+            createdStack.AddItems(itemStack.Amount);
+        }
+
     }
 }
