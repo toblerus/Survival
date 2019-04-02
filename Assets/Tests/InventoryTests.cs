@@ -60,7 +60,7 @@ namespace Tests
 
             var itemStacks = _inventory.ItemStacks;
             Assert.AreEqual(2, itemStacks.Count);
-            Assert.AreEqual(ItemStackTests.DefaultCapacity, itemStacks[0].Amount); 
+            Assert.AreEqual(ItemStackTests.DefaultCapacity, itemStacks[0].Amount);
             var expectedAmountSecondStack = 2 * itemsAdded - ItemStackTests.DefaultCapacity;
             Assert.AreEqual(expectedAmountSecondStack, itemStacks[1].Amount);
         }
@@ -79,6 +79,17 @@ namespace Tests
             var splitItemAmount = DefaultItemAmount / 2;
             Assert.AreEqual(splitItemAmount, itemStacks[0].Amount);
             Assert.AreEqual(DefaultItemAmount - splitItemAmount, itemStacks[1].Amount);
+        }
+
+        [Test]
+        public void Test_AddItems_ExceedInventoryCapacity_ShouldThrow()
+        {
+            Assert.Throws<Exception>(() =>
+            {
+                _inventory.AddItems(DefaultItemType, DefaultSlotCapacity * DefaultItemAmount + 1);
+            });
+
+            Assert.AreEqual(DefaultSlotCapacity, _inventory.ItemStacks.Count);
         }
     }
 }
