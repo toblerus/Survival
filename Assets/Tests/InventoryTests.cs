@@ -95,5 +95,30 @@ namespace Tests
             var itemSum = _inventory.ItemStacks.Sum(itemStack => itemStack.Amount);
             Assert.AreEqual(expectedItemsAdded, itemSum);
         }
+
+        [Test]
+        public void Test_SwapItemStacks()
+        {
+            _inventory.AddItems(ItemType.Waterbottle, 1);
+            _inventory.AddItems(ItemType.Stone, 80);
+
+            _inventory.SwapItemStacks(0, 1);
+
+            var itemStacks = _inventory.ItemStacks;
+            Assert.AreEqual(ItemType.Stone, _inventory.ItemStacks[0].ItemType); //First Slot should be Stone afterwards, second one should be Water
+            Assert.AreEqual(ItemType.Waterbottle, _inventory.ItemStacks[1].ItemType);
+
+            Assert.AreEqual(64, itemStacks[0].Amount); //Amounts should be correct aswell
+            Assert.AreEqual(1, itemStacks[1].Amount);
+        }
+
+        [Test]
+        public void Test_SwapItemStacks_OutOfBounds_ShouldThrow()
+        {
+            _inventory.AddItems(ItemType.Waterbottle, 1);
+            _inventory.AddItems(ItemType.Stone, 80);
+
+            Assert.Throws<Exception>(() => { _inventory.SwapItemStacks(0, 12); });
+        }
     }
 }

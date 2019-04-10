@@ -12,6 +12,6 @@ public class InventoryTester : MonoBehaviour
         var inventory = new Inventory(12, _allItemsConfig);
         inventory.AddItems(ItemType.Waterbottle, 3);
         inventory.AddItems(ItemType.Sand, 80);
-        Debug.Log(inventory);
+        Debug.Log(inventory); //Ascii art, Andere ItemTypes, UML zu slots
     }
 }

@@ -69,6 +69,18 @@ namespace Scripts.InventorySystem
             createdStack.AddItems(itemStack.Amount);
         }
 
+        public void SwapItemStacks(int StackIndexOne, int StackIndexTwo)
+        {
+            if (StackIndexOne > _itemStacks.Count || StackIndexTwo > _itemStacks.Count)
+            {
+                throw new Exception("Tried to swap stacks that are out of bounds!");
+            }
+
+            var tempStack = _itemStacks[StackIndexOne]; //temporarily save first stack
+            _itemStacks[StackIndexOne] = _itemStacks[StackIndexTwo]; //make first stack second stack
+            _itemStacks[StackIndexTwo] = tempStack;//make second stack first stack
+        }
+
         public override string ToString()
         {
             var builder = new StringBuilder();
