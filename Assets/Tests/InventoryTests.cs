@@ -115,10 +115,13 @@ namespace Tests
         [Test]
         public void Test_SwapItemStacks_OutOfBounds_ShouldThrow()
         {
-            _inventory.AddItems(ItemType.Waterbottle, 1);
-            _inventory.AddItems(ItemType.Stone, 80);
-
             Assert.Throws<Exception>(() => { _inventory.SwapItemStacks(0, 12); });
+        }
+
+        [Test]
+        public void Test_SwapItemStacks_Negative_ShouldThrow()
+        {
+            Assert.Throws<Exception>(() => { _inventory.SwapItemStacks(-1, 12); });
         }
     }
 }

@@ -76,6 +76,11 @@ namespace Scripts.InventorySystem
                 throw new Exception("Tried to swap stacks that are out of bounds!");
             }
 
+            if (StackIndexOne < 0 || StackIndexTwo < 0)
+            {
+                throw new Exception("Swap Index can't be negative!");
+            }
+
             var tempStack = _itemStacks[StackIndexOne]; //temporarily save first stack
             _itemStacks[StackIndexOne] = _itemStacks[StackIndexTwo]; //make first stack second stack
             _itemStacks[StackIndexTwo] = tempStack;//make second stack first stack
