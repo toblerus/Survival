@@ -7,10 +7,10 @@ namespace Scripts.InventorySystem
 {
     public class Inventory
     {
-        private readonly List<ItemStack> _itemStacks = new List<ItemStack>();
+        private readonly List<Slot> _slots = new List<Slot>();
         private readonly IItemStackCapacityProvider _itemStackCapacityProvider;
 
-        public IReadOnlyList<ItemStack> ItemStacks => _itemStacks;
+        public IReadOnlyList<Slot> Slots => _slots;
 
         public int Capacity { get; }
 
@@ -45,18 +45,20 @@ namespace Scripts.InventorySystem
 
         private ItemStack GetAvailableItemStackForItemType(ItemType itemType)
         {
-            var itemStack = _itemStacks
-                .FirstOrDefault(stack => stack.ItemType == itemType && stack.GetRemainingCapacity() > 0);
+            var slot = _slots
+                .FirstOrDefault(stack => stack._itemStack.ItemType == itemType && stack._itemStack.GetRemainingCapacity() > 0);
 
-            return itemStack ?? CreateItemStack(itemType);
+
+            return slot._itemStack ?? CreateItemStack(itemType);
         }
 
         private ItemStack CreateItemStack(ItemType itemType)
         {
-            if (_itemStacks.Count < Capacity)
+            if (_slots.Count < Capacity)
             {
                 var itemStack = new ItemStack(itemType, _itemStackCapacityProvider);
-                _itemStacks.Add(itemStack);
+                var slot = new Slot(itemStack);
+                _slots.Add(slot);
                 return itemStack;
             }
 
@@ -71,7 +73,7 @@ namespace Scripts.InventorySystem
 
         public void SwapItemStacks(int StackIndexOne, int StackIndexTwo)
         {
-            if (StackIndexOne > _itemStacks.Count || StackIndexTwo > _itemStacks.Count)
+            if (StackIndexOne > _slots.Count || StackIndexTwo > _slots.Count)
             {
                 throw new Exception("Tried to swap stacks that are out of bounds!");
             }
@@ -81,18 +83,18 @@ namespace Scripts.InventorySystem
                 throw new Exception("Swap Index can't be negative!");
             }
 
-            var tempStack = _itemStacks[StackIndexOne]; //temporarily save first stack
-            _itemStacks[StackIndexOne] = _itemStacks[StackIndexTwo]; //make first stack second stack
-            _itemStacks[StackIndexTwo] = tempStack;//make second stack first stack
+            var tempStack = _slots[StackIndexOne]; //temporarily save first stack
+            _slots[StackIndexOne] = _slots[StackIndexTwo]; //make first stack second stack
+            _slots[StackIndexTwo] = tempStack;//make second stack first stack
         }
 
         public override string ToString()
         {
             var builder = new StringBuilder();
             builder.AppendLine($"[{nameof(Inventory)}]");
-            builder.AppendLine($"{ItemStacks.Count} / {Capacity} in use:");
+            builder.AppendLine($"{Slots.Count} / {Capacity} in use:");
             
-            foreach (var stack in ItemStacks)
+            foreach (var stack in Slots)
             {
                 builder.AppendLine(stack.ToString());
             }
