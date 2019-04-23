@@ -97,12 +97,12 @@ namespace Tests
         }
 
         [Test]
-        public void Test_SwapItemStacks()
+        public void Test_SwapSlots()
         {
             _inventory.AddItems(ItemType.Waterbottle, 1);
             _inventory.AddItems(ItemType.Stone, 80);
 
-            _inventory.SwapItemStacks(0, 1);
+            _inventory.SwapSlots(0, 1);
 
             var slots = _inventory.Slots;
             Assert.AreEqual(ItemType.Stone, _inventory.Slots[0]._itemStack.ItemType); //First Slot should be Stone afterwards, second one should be Water
@@ -113,15 +113,15 @@ namespace Tests
         }
 
         [Test]
-        public void Test_SwapItemStacks_OutOfBounds_ShouldThrow()
+        public void Test_SwapSlotes_OutOfBounds_ShouldThrow()
         {
-            Assert.Throws<Exception>(() => { _inventory.SwapItemStacks(0, 12); });
+            Assert.Throws<Exception>(() => { _inventory.SwapSlots(0, 12); });
         }
 
         [Test]
-        public void Test_SwapItemStacks_Negative_ShouldThrow()
+        public void Test_SwapSlots_Negative_ShouldThrow()
         {
-            Assert.Throws<Exception>(() => { _inventory.SwapItemStacks(-1, 12); });
+            Assert.Throws<Exception>(() => { _inventory.SwapSlots(-1, 12); });
         }
     }
 }

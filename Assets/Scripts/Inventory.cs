@@ -71,21 +71,21 @@ namespace Scripts.InventorySystem
             createdStack.AddItems(itemStack.Amount);
         }
 
-        public void SwapItemStacks(int StackIndexOne, int StackIndexTwo)
+        public void SwapSlots(int SlotIndexOne, int SlotIndexTwo)
         {
-            if (StackIndexOne > _slots.Count || StackIndexTwo > _slots.Count)
+            if (SlotIndexOne > _slots.Count || SlotIndexTwo > _slots.Count)
             {
                 throw new Exception("Tried to swap stacks that are out of bounds!");
             }
 
-            if (StackIndexOne < 0 || StackIndexTwo < 0)
+            if (SlotIndexOne < 0 || SlotIndexTwo < 0)
             {
                 throw new Exception("Swap Index can't be negative!");
             }
 
-            var tempStack = _slots[StackIndexOne]; //temporarily save first stack
-            _slots[StackIndexOne] = _slots[StackIndexTwo]; //make first stack second stack
-            _slots[StackIndexTwo] = tempStack;//make second stack first stack
+            var tempSlot = _slots[SlotIndexOne]; //temporarily save first stack
+            _slots[SlotIndexOne] = _slots[SlotIndexTwo]; //make first stack second stack
+            _slots[SlotIndexTwo] = tempSlot;//make second stack first stack
         }
 
         public override string ToString()
