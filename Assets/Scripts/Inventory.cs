@@ -49,7 +49,7 @@ namespace Scripts.InventorySystem
                 .FirstOrDefault(stack => stack._itemStack.ItemType == itemType && stack._itemStack.GetRemainingCapacity() > 0);
 
 
-            return slot._itemStack ?? CreateItemStack(itemType);
+            return slot?._itemStack ?? CreateItemStack(itemType);
         }
 
         private ItemStack CreateItemStack(ItemType itemType)

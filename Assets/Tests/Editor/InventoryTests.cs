@@ -113,7 +113,7 @@ namespace Tests
         }
 
         [Test]
-        public void Test_SwapSlotes_OutOfBounds_ShouldThrow()
+        public void Test_SwapSlots_OutOfBounds_ShouldThrow()
         {
             Assert.Throws<Exception>(() => { _inventory.SwapSlots(0, 12); });
         }
