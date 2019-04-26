@@ -9,8 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0316fd5c83322ad4393155eb1c611ac8, type: 3}
-  m_Name: Cactus
+  m_Name: Wood
   m_EditorClassIdentifier: 
-  _itemType: 6
+  _itemType: 0
   _capacity: 64
-  _sprite: {fileID: 21300000, guid: 3ba6692443653c2479fe60ff9c81e520, type: 3}
+  _sprite: {fileID: 21300000, guid: fcd4d516aa96e5c41a6e7bf5e7cfb185, type: 3}

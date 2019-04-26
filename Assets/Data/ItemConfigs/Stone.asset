@@ -13,3 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemType: 5
   _capacity: 64
+  _sprite: {fileID: 21300000, guid: c97732deb0f699f4abec2631e37cf6d4, type: 3}
