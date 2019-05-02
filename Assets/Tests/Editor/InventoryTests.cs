@@ -25,7 +25,8 @@ namespace Tests
         public void Test_Initialization()
         {
             Assert.AreEqual(DefaultSlotCapacity, _inventory.Capacity);
-            Assert.AreEqual(0, _inventory.Slots.Count);
+            Assert.AreEqual(DefaultSlotCapacity, _inventory.Slots.Count);
+            Assert.AreEqual(0, _inventory.GetItemStacks().Count);
         }
 
         [Test]
@@ -39,9 +40,9 @@ namespace Tests
         {
             _inventory.AddItems(DefaultItemType, DefaultItemAmount);
 
-            var slots = _inventory.Slots;
-            Assert.AreEqual(1, slots.Count);
-            Assert.AreEqual(DefaultItemAmount, slots[0]._itemStack.Amount);
+            var stacks = _inventory.GetItemStacks();
+            Assert.AreEqual(1, stacks.Count);
+            Assert.AreEqual(DefaultItemAmount, stacks[0].Amount);
         }
 
         [Test]
@@ -50,9 +51,9 @@ namespace Tests
             _inventory.AddItems(DefaultItemType, DefaultItemAmount);
             _inventory.AddItems(DefaultItemType, DefaultItemAmount);
 
-            var slots = _inventory.Slots;
-            Assert.AreEqual(1, slots.Count);
-            Assert.AreEqual(2 * DefaultItemAmount, slots[0]._itemStack.Amount);
+            var stacks = _inventory.GetItemStacks();
+            Assert.AreEqual(1, stacks.Count);
+            Assert.AreEqual(2 * DefaultItemAmount, stacks[0].Amount);
         }
 
         [Test]
@@ -62,11 +63,11 @@ namespace Tests
             _inventory.AddItems(DefaultItemType, itemsAdded);
             _inventory.AddItems(DefaultItemType, itemsAdded);
 
-            var slots = _inventory.Slots;
-            Assert.AreEqual(2, slots.Count);
-            Assert.AreEqual(ItemStackTests.DefaultCapacity, slots[0]._itemStack.Amount);
+            var stacks = _inventory.GetItemStacks();
+            Assert.AreEqual(2, stacks.Count);
+            Assert.AreEqual(ItemStackTests.DefaultCapacity, stacks[0].Amount);
             var expectedAmountSecondStack = 2 * itemsAdded - ItemStackTests.DefaultCapacity;
-            Assert.AreEqual(expectedAmountSecondStack, slots[1]._itemStack.Amount);
+            Assert.AreEqual(expectedAmountSecondStack, stacks[1].Amount);
         }
 
         [Test]
@@ -75,14 +76,14 @@ namespace Tests
             _inventory.AddItems(DefaultItemType, DefaultItemAmount);
 
             var slot = _inventory.Slots[0];
-            var newItemStack = slot._itemStack.Split();
+            var newItemStack = slot.ItemStack.Split();
             _inventory.AddItemStack(newItemStack);
 
-            var slots = _inventory.Slots;
-            Assert.AreEqual(2, slots.Count);
+            var stacks = _inventory.GetItemStacks();
+            Assert.AreEqual(2, stacks.Count);
             var splitItemAmount = DefaultItemAmount / 2;
-            Assert.AreEqual(splitItemAmount, slots[0]._itemStack.Amount);
-            Assert.AreEqual(DefaultItemAmount - splitItemAmount, slots[1]._itemStack.Amount);
+            Assert.AreEqual(splitItemAmount, stacks[0].Amount);
+            Assert.AreEqual(DefaultItemAmount - splitItemAmount, stacks[1].Amount);
         }
 
         [Test]
@@ -92,7 +93,7 @@ namespace Tests
             Assert.Throws<Exception>(() => { _inventory.AddItems(DefaultItemType, expectedItemsAdded + 1); });
 
             Assert.AreEqual(DefaultSlotCapacity, _inventory.Slots.Count);
-            var itemSum = _inventory.Slots.Sum(itemStack => itemStack._itemStack.Amount);
+            var itemSum = _inventory.Slots.Sum(itemStack => itemStack.ItemStack.Amount);
             Assert.AreEqual(expectedItemsAdded, itemSum);
         }
 
@@ -105,11 +106,11 @@ namespace Tests
             _inventory.SwapSlots(0, 1);
 
             var slots = _inventory.Slots;
-            Assert.AreEqual(ItemType.Stone, _inventory.Slots[0]._itemStack.ItemType); //First Slot should be Stone afterwards, second one should be Water
-            Assert.AreEqual(ItemType.Waterbottle, _inventory.Slots[1]._itemStack.ItemType);
+            Assert.AreEqual(ItemType.Stone, _inventory.Slots[0].ItemStack.ItemType); //First Slot should be Stone afterwards, second one should be Water
+            Assert.AreEqual(ItemType.Waterbottle, _inventory.Slots[1].ItemStack.ItemType);
 
-            Assert.AreEqual(64, slots[0]._itemStack.Amount); //Amounts should be correct aswell
-            Assert.AreEqual(1, slots[1]._itemStack.Amount);
+            Assert.AreEqual(64, slots[0].ItemStack.Amount); //Amounts should be correct aswell
+            Assert.AreEqual(1, slots[1].ItemStack.Amount);
         }
 
         [Test]

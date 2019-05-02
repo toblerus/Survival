@@ -1,14 +1,17 @@
 ﻿using Scripts.InventorySystem;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 
-public class Slot 
+public class Slot
 {
-public readonly ItemStack _itemStack;
+    private ItemStack _itemStack;
+    public ItemStack ItemStack { get { return _itemStack; } }
 
-    public Slot(ItemStack itemStack)
+    public Slot()
+    {
+
+    }
+
+    public void SetItemStack(ItemStack itemStack)
     {
         _itemStack = itemStack;
     }

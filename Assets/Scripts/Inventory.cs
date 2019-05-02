@@ -22,6 +22,10 @@ namespace Scripts.InventorySystem
             }
 
             Capacity = capacity;
+            for (int i = 0; i < capacity; i++)
+            {
+                _slots.Add(new Slot());
+            }
             _itemStackCapacityProvider = itemStackCapacityProvider;
         }
 
@@ -43,37 +47,56 @@ namespace Scripts.InventorySystem
             }
         }
 
-        private ItemStack GetAvailableItemStackForItemType(ItemType itemType)
+        public List<Slot> GetFilledSlots()
         {
-            var slot = _slots
-                .FirstOrDefault(stack => stack._itemStack.ItemType == itemType && stack._itemStack.GetRemainingCapacity() > 0);
-
-
-            return slot?._itemStack ?? CreateItemStack(itemType);
+            return _slots.Where(slot => slot.ItemStack != null).ToList();
         }
 
-        private ItemStack CreateItemStack(ItemType itemType)
+        public List<ItemStack> GetItemStacks()
         {
-            if (_slots.Count < Capacity)
-            {
-                var itemStack = new ItemStack(itemType, _itemStackCapacityProvider);
-                var slot = new Slot(itemStack);
-                _slots.Add(slot);
-                return itemStack;
-            }
+            return GetFilledSlots().Select(slot => slot.ItemStack).ToList();
+        }
 
-            throw new Exception("No more space in inventory!");
+        private ItemStack GetAvailableItemStackForItemType(ItemType itemType)
+        {
+            List<Slot> _slotsWithItemStacks = GetFilledSlots();
+
+            var matchingSlot = _slotsWithItemStacks
+                .FirstOrDefault(slot => slot.ItemStack.ItemType == itemType && slot.ItemStack.GetRemainingCapacity() > 0);
+            if (matchingSlot != null)
+            {
+                return matchingSlot.ItemStack;
+            }
+            var emptySlot = GetEmptySlot();
+            return CreateItemStack(itemType, emptySlot);
+        }
+
+        private Slot GetEmptySlot()
+        {
+            var emptySlot = _slots.FirstOrDefault(slot => slot.ItemStack == null);
+            if (emptySlot == null)
+            {
+                throw new Exception("No more space in inventory!");
+            }
+            return emptySlot;
+        }
+
+        private ItemStack CreateItemStack(ItemType itemType, Slot slot)
+        {
+            var itemStack = new ItemStack(itemType, _itemStackCapacityProvider);
+            slot.SetItemStack(itemStack);
+            return itemStack;
         }
 
         public void AddItemStack(ItemStack itemStack)
         {
-            var createdStack = CreateItemStack(itemStack.ItemType);
+            var createdStack = CreateItemStack(itemStack.ItemType, GetEmptySlot());
             createdStack.AddItems(itemStack.Amount);
         }
 
         public void SwapSlots(int SlotIndexOne, int SlotIndexTwo)
         {
-            if (SlotIndexOne > _slots.Count || SlotIndexTwo > _slots.Count)
+            if (SlotIndexOne >= _slots.Count || SlotIndexTwo >= _slots.Count)
             {
                 throw new Exception("Tried to swap stacks that are out of bounds!");
             }
@@ -93,7 +116,7 @@ namespace Scripts.InventorySystem
             var builder = new StringBuilder();
             builder.AppendLine($"[{nameof(Inventory)}]");
             builder.AppendLine($"{Slots.Count} / {Capacity} in use:");
-            
+
             foreach (var stack in Slots)
             {
                 builder.AppendLine(stack.ToString());
